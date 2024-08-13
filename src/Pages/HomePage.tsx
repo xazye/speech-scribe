@@ -72,11 +72,11 @@ const HomePage: React.FC<HomePageProps> = ({ setFile, setAudioStream }) => {
 
   return (
     <main className="flex flex-col gap-4 justify-center items-center flex-grow">
-      <h1 className="text-7xl font-semibold ">
+      <h1 className="text-5xl sm:text-7xl font-semibold ">
         Speech<span className="text-secondary">Scribe</span>
       </h1>
-      <section className="flex flex-col gap-4 justify-center items-center">
-        <p className="text-2xl flex flex-row justify-center items-center gap-2 bg-gradient-to-r from-white via-secondary to-primary-600 text-transparent bg-clip-text mb-8">
+      <section className="flex flex-col gap-4 justify-center items-center max-w-96 w-full">
+        <p className="sm:text-2xl flex flex-row justify-center items-center gap-2 bg-gradient-to-r from-white via-secondary to-primary-600 text-transparent bg-clip-text mb-8">
           {" "}
           Record <FaAnglesRight className="text-primary-400" /> Transcribe{" "}
           <FaAnglesRight className="text-primary-400" /> Translate
