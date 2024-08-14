@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Transcription } from "../Components/Transcription";
 import { Translation } from "../Components/Translation";
 
-const InformationPage: React.FC = () => {
+const InformationPage: React.FC<any> = ({output}) => {
+  console.log('inforpros',output)
   const [tab, setTab] = useState<string>("transcription");
   return (
     <main className="flex flex-col gap-4 justify-center items-center flex-grow">
@@ -34,7 +35,7 @@ const InformationPage: React.FC = () => {
             Translation
           </button>
         </div>
-        {tab === "transcription" ? <Transcription /> : <Translation />}
+        {tab === "transcription" ? <Transcription output={output} /> : <Translation />}
       </section>
     </main>
   );

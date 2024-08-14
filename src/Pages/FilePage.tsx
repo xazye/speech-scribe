@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 import { Button } from "../Components/Button";
 import { FaPen } from "react-icons/fa6";
 
@@ -6,12 +6,14 @@ interface FilePageProps {
   setAudioStream: React.Dispatch<React.SetStateAction<any>>;
   file: File | null;
   handleAudioReset: () => void;
+  handleFormSubmission:()=>void;
 }
 
 const FilePage: React.FC<FilePageProps> = ({
   file,
   setAudioStream,
   handleAudioReset,
+  handleFormSubmission
 }) => {
   return (
     <main className="flex flex-col gap-4 justify-center items-center flex-grow">
@@ -25,7 +27,7 @@ const FilePage: React.FC<FilePageProps> = ({
         </div>
         <div className="w-full flex flex-row justify-between mt-8">
             <Button onClick={handleAudioReset} className="text-red-500 border-red-500 shadow-red-900 hover:border-secondary hover:shadow-secondary"> Reset </Button>
-            <Button className="gap-4"> Transcribe <FaPen />            </Button>
+            <Button onClick={handleFormSubmission} className="gap-4"> Transcribe <FaPen />            </Button>
         </div>
       </section>
     </main>

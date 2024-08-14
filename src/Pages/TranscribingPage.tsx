@@ -14,7 +14,6 @@ const TranscribingPage: React.FC = ({ downloading }) => {
         <p className="z-10 sm:text-2xl flex flex-row justify-center items-center gap-2 bg-gradient-to-r from-white  to-primary-600 text-transparent bg-clip-text mb-8 animate-pulse">
           {true ? "Unleashing the digital genie" : "Transcribing"}
         </p>
-        <p>
           <div >
             <div className="circle"></div>
             <div className="circle"></div>
@@ -22,7 +21,6 @@ const TranscribingPage: React.FC = ({ downloading }) => {
             <div className="circle"></div>
             <div className="circle"></div>
           </div>
-        </p>
       </section>
     </main>
   );

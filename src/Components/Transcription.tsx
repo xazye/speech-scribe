@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Transcription: React.FC  =() =>{
+const Transcription: React.FC  =({output}) =>{
+  console.log('transcitpionoutp',output)
   return (
-    <div>Transcription</div>
+    <div>{output.text}</div>
   )
 }
 
