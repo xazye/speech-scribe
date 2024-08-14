@@ -15,7 +15,7 @@ const FilePage: React.FC<FilePageProps> = ({
 }) => {
   return (
     <main className="flex flex-col gap-4 justify-center items-center flex-grow">
-      <h1 className="text-5xl sm:text-7xl font-semibold ">
+      <h1 className="text-4xl sm:text-7xl font-semibold ">
         Uploaded <span className="text-secondary">file</span>
       </h1>
       <section className=" flex flex-col gap-4 justify-center items-center mt-8 max-w-96 w-full">

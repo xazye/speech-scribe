@@ -72,7 +72,7 @@ const HomePage: React.FC<HomePageProps> = ({ setFile, setAudioStream }) => {
 
   return (
     <main className="flex flex-col gap-4 justify-center items-center flex-grow">
-      <h1 className="text-5xl sm:text-7xl font-semibold ">
+      <h1 className="text-4xl sm:text-7xl font-semibold ">
         Speech<span className="text-secondary">Scribe</span>
       </h1>
       <section className="flex flex-col gap-4 justify-center items-center max-w-96 w-full">
