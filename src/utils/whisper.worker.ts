@@ -1,34 +1,42 @@
-import { pipeline, env, PipelineType, TextClassificationPipeline } from "@xenova/transformers";
+import { pipeline, env, PipelineType, TextClassificationPipeline, PretrainedOptions, AllTasks, AutomaticSpeechRecognitionPipeline, Pipeline, AudioPipelineInputs } from "@xenova/transformers";
 import { MessageTypes } from "./presets";
 
 // https://github.com/xenova/transformers.js/issues/366
 env.allowLocalModels = false;
 env.useBrowserCache = false;
 
+// 
+// I'M TOO LAZY TO USE TYPES FOR ALL OF THIS 
+// 
+interface result{
+  text: string
+  start: number | undefined
+  end: number |  undefined
+}
+
 class MyTranscriptionPipeline {
   static task:PipelineType = "automatic-speech-recognition";
   static model = "Xenova/whisper-tiny.en";
-  static instance: null | any = null;
-
-  static async getInstance(progress_callback: any) {
+  static instance: AutomaticSpeechRecognitionPipeline | null = null;
+  static async getInstance(progress_callback: (progress: any) => void): Promise<AutomaticSpeechRecognitionPipeline> {
     if (this.instance === null) {
       console.log("Attempting to load model from:", this.model);
       this.instance = await pipeline(this.task, this.model, {
         progress_callback,
         quantized: false,
-      });
+      }) as AutomaticSpeechRecognitionPipeline;
     }
     return this.instance;
   }
 }
 self.addEventListener("message", async (event) => {
-  const { type, audio } = event.data;
+  const { type, audio }:{ type:string; audio:AudioPipelineInputs }  = event.data
   if (type === MessageTypes.INFERENCE_REQUEST) {
     await transcribe(audio);
   }
 });
 
-async function transcribe(audio: any) {
+async function transcribe(audio: AudioPipelineInputs) {
   sendLoadingMessage("loading");
   let pipeline;
   try {
@@ -64,7 +72,13 @@ async function transcribe(audio: any) {
   generationTracker.sendFinalResult();
 }
 
-async function load_model_callback(data: any) {
+async function load_model_callback(data: {  
+  status: string;
+  file: string;      
+  progress: number;  
+  loaded: number;    
+  total: number;     
+}) {
   const { status } = data;
   if (status === "progress") {
     const { file, progress, loaded, total } = data;
@@ -95,14 +109,14 @@ async function sendDownloadingMessage(
 }
 
 class GenerationTracker {
-  pipeline: any;
+  pipeline: AutomaticSpeechRecognitionPipeline;
   stride_length_s: number;
-  chunks: any[];
+  chunks: Blob[];
   time_precision: number;
   processed_chunks: any[];
   callbackFunctionCounter: number;
 
-  constructor(pipeline: any, stride_length_s: number) {
+  constructor(pipeline: AutomaticSpeechRecognitionPipeline, stride_length_s: number) {
     this.pipeline = pipeline;
     this.stride_length_s = stride_length_s;
     this.chunks = [];
@@ -128,7 +142,7 @@ class GenerationTracker {
     let text = this.pipeline.tokenizer.decode(bestBeams.output_token_ids, {
       skip_special_tokens: true,
     });
-    const result = {
+    const result: result  = {
       text,
       start: this.getLastChunkTimestamp(),
       end: undefined,
